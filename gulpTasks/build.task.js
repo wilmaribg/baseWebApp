@@ -42,12 +42,16 @@ gulp.task( 'buildCSS', [], function () {
 
 
 gulp.task( 'buildJS', [], function () {
-	var	uglify     = require( 'gulp-uglify' ),
+	var	uglify 	   = require( 'gulp-uglify' ),
 		browser    = require( 'browser-sync' ),
+		jshint     = require('gulp-jshint'),
 		sourcemaps = require( 'gulp-sourcemaps' ),
+		stylish    = require('jshint-stylish'),
 		concat     = require( 'gulp-concat' );
 	return gulp
 			.src( config.sourceJS )
+			.pipe( jshint({indent: 2} ) )
+    		.pipe( jshint.reporter( stylish ) )
 			.pipe( gulp.dest( './build/js/app' ) )
 			.pipe( concat( 'app.min.js' ) )
 			.pipe( sourcemaps.init() )
